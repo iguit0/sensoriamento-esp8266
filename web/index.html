@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>Soil Moisture</title>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"
+    />
+
+    <link href="./styles.css" rel="stylesheet" />
+
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+  </head>
+
+  <body onload="loadData()" style="margin:0;">
+    <div id="loader"></div>
+
+    <div class="navbar-fixed">
+      <nav class="nav-extended">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo center">Soil Moisture</a>
+        </div>
+        <div class="nav-content center">
+          <h6>
+            Sensoriamento da umidade do solo em tempo real usando NodeMCU e
+            Firebase
+          </h6>
+        </div>
+      </nav>
+    </div>
+    <div class="container content animate-bottom" id="myDiv">
+      <br />
+      <br />
+      <br />
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="card">
+            <div class="card-image center">
+              <span id="currentUmid" class="statistic">-</span>
+            </div>
+            <div class="card-content">
+              <span class="card-title grey-text text-darken-4">
+                <i class="fa fa-tint" aria-hidden="true"></i>
+                Umidade
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m6">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title grey-text text-darken-4">
+                Histórico
+              </span>
+              <canvas id="umidLineChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-database.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.3.0/firebase-analytics.js"></script>
+
+    <script src="app.js"></script>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+  </body>
+</html>
