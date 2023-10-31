@@ -1,2 +1,3 @@
-# Sensoriamento ESP8266 :seedling:
-:seedling: Sensoriamento da umidade do solo em tempo real usando NodeMCU e Firebase
+# :seedling: Real-time Soil Moisture :seedling:
+
+Real-time soil moisture sensing using NodeMCU and Firebase
