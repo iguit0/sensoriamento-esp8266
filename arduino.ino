@@ -1,48 +1,35 @@
-/* 
-* DESENVOLVIDO POR:
-*   IGOR LUCIO ROCHA ALVES
-*   UFV - UNIVERSIDADE FEDERAL DE VICOSA
-*   CAMPUS RIO PARANAIBA
-* CONTATO:
-*   igor.lucio@ufv.br
-*   igorsk89@gmail.com
-*   twitter.com/iguit0
-*/
-
-//Inclusao de bibliotecas
 #include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <FirebaseArduino.h>
 #include <Ticker.h>
 
-//Definicao do SSID e da senha da rede sem fio
-#define WIFI_SSID "nome da rede wifi"
-#define WIFI_PASSWORD "senha da rede wifi"
+// Configuration variables
+#define WIFI_SSID "WIFI_SSID"
+#define WIFI_PASSWORD "WIFI_PASSWORD"
 
-//Definicao do Host e do Segredo do Firebase
-#define FIREBASE_HOST "host firebase"
-#define FIREBASE_AUTH "chave firebase"
+#define FIREBASE_HOST "FIREBASE_HOST"
+#define FIREBASE_AUTH "FIREBASE_AUTH"
 
-//Definicao dos pinos de saida, tipo de sensor e tempo de intervalo de publicacao das leituras do sensor
+// Definition of output pins, sensor type and interval time for publishing sensor readings
 #define SENSOR_PIN 0 // A0
 #define PUBLISH_INTERVAL 1000*60*2 // Publicar a cada 2 minutos
 
-//Definicao de constantes - seco e molhado
-const int VAL_HIGH = 1024; // SECO
-const int VAL_LOW = 800; // MOLHADO
+// Constants
+const int VAL_HIGH = 1024; // DRY
+const int VAL_LOW = 800; // WET
 
-//Criacao de objetos para o sensor e para o "ticker" e definicao da variavel para controle de publicao de dados
+// Creation of objects for the sensor and ticker and definition of the variable to control data publication
 Ticker ticker;
 bool publishNewState = true;
 
-//Funcao para controle de publicacao de dados no banco de dados do Firebase
+// Function to control data publication in the Firebase database
 void publish(){
   publishNewState = true;
 }
 
-//Inicia-se a captura do sensor de solo
-void setupPins(){
+// Soil sensor capture starts
+void setupPins() {
   Serial.begin(115200);
   pinMode(SENSOR_PIN, INPUT);
 }
@@ -75,12 +62,12 @@ void setup() {
   setupWifi();    
   setupFirebase();
 
-  // Registra o ticker para publicar de tempos em tempos
+  // Register the ticker to publish from time to time
   ticker.attach_ms(PUBLISH_INTERVAL, publish);
 }
 
 void loop() {  
-  // Para debugar
+  // To DEBUG
   float valorADC = analogRead(SENSOR_PIN);
   Serial.print("\tRaw Value: ");
   Serial.print(valorADC);
@@ -98,22 +85,22 @@ void loop() {
     Serial.print("%");
   }
   
-  // Condicional para controle de publicacao de acordo com o intervalo de publicacao definido
+  // Conditional for publication control according to the defined publication interval
   if(publishNewState) {
     Serial.println("\tPublicar Novo Estado");
     
-    //Verificao se valor e valido
+    // Checking if value is valid
     if(!isnan(fim)) {
-      // Publicacao dos dados para o banco de dados do Firebase e exibicao os dados pela serial
+      // Publishing data to the Firebase database and displaying the data via serial
       Firebase.pushInt("umidade", fim);
       Serial.print("\tSoil Moisture: ");
       Serial.print(fim);
       Serial.print("%");
       
       publishNewState = false;
-    }else {
-      Serial.println("Erro ao capturar umidade!");
-      Serial.println("Erro ao tentar enviar dados ao Firebase");
+    } else {
+      Serial.println("Error capturing moisture!");
+      Serial.println("Error when trying to send data to Firebase");
     }
   }
   
