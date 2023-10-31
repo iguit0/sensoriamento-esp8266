@@ -1,4 +1,4 @@
-//Credenciais Firebase
+// Firebase Credentials
 
 const firebaseConfig = {
   apiKey: "apiKey",
@@ -20,10 +20,10 @@ function loadData() {
 
     let db = firebase.database();
 
-    // Cria os listeners dos dados no firebase
+    // Instantiate Firebase Listener
     let umidRef = db.ref("umidade");
 
-    // Registra as funções que atualizam os gráficos e dados atuais da telemetria
+    // Records functions that update current telemetry graphs and data
     umidRef.on(
       "value",
       onNewData("currentUmid", "umidLineChart", "Umidade", "%")
@@ -33,9 +33,9 @@ function loadData() {
   }, 1500);
 }
 
-// Retorna uma função que de acordo com as mudanças dos dados
-// Atualiza o valor atual do elemento, com a metrica passada (currentValueEl e metric)
-// e monta o gráfico com os dados e descrição do tipo de dados (chartEl, label)
+// Returns a function that according to data changes
+// Update the current value of the element, with the passed metric (currentValueEl and metric)
+// and assembles the chart with the data and description of the data type (chartEl, label)
 function onNewData(currentValueEl, chartEl, label, metric) {
   return function(snapshot) {
     var readings = snapshot.val();
@@ -55,8 +55,7 @@ function onNewData(currentValueEl, chartEl, label, metric) {
   };
 }
 
-// Constroi um gráfico de linha no elemento (el) com a descrição (label) e os
-// dados passados (data)
+// Builds a line graph on the element (el) with the description (label) and the past data (date)
 function buildLineChart(el, label, data) {
   var elNode = document.getElementById(el);
   new Chart(elNode, {
